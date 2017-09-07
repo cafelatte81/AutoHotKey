@@ -1,3 +1,5 @@
+#SingleInstance, Force
+
 Gui, -Caption
 Gui, font, s22 cwhite
 
@@ -21,30 +23,66 @@ Gui, Add, Picture, x310 y250 +BackgroundTrans vy2 gClick2 hidden, button off 1.p
 Gui, Show, w500 h340
 
 ci := 1, xi := 1, yi := 1
-Return
+
+return
+
 
 uiMove:
 PostMessage, 0xA1, 2,,, A 
 Return
 
-close:
-GuiEscape:
-Exitapp
 
 Click:
 	GuiControl Hide, c%ci%
 	ci := 3 - ci
 	GuiControl Show, c%ci%
+	
+	if (ci == 2)
+		{
+		ToolTip, Internet On
+		}else{
+		ToolTip, Internet Off
+		}
+		SetTimer, RemoveToolTip, 2000
 Return
+
+
 
 Click1:
 	GuiControl Hide, x%xi%
 	xi := 3 - xi
 	GuiControl Show, x%xi%
+	if (xi == 2)
+		{
+		ToolTip, Sound On
+		}else{
+		ToolTip, Sound Off
+		}
+		SetTimer, RemoveToolTip, 2000
 Return
+
+
 
 Click2:
 	GuiControl Hide, y%yi%
 	yi := 3 - yi
 	GuiControl Show, y%yi%
+	if (yi == 2)
+		{
+		ToolTip, Microphone On
+		}else{
+		ToolTip, Microphone Off
+		}
+		SetTimer, RemoveToolTip, 2000
 Return
+
+RemoveToolTip:
+SetTimer, RemoveToolTip, off
+ToolTip
+return
+
+
+
+close:
+GuiEscape:
+Exitapp
